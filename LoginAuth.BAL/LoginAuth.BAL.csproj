@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LoginAuth.DAL\LoginAuth.DAL.csproj" />
+    <ProjectReference Include="..\LoginAuth.Entities\LoginAuth.Entities.csproj" />
+  </ItemGroup>
+
+</Project>
