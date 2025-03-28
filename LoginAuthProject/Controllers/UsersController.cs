@@ -26,8 +26,8 @@ namespace LoginAuthProject.Controllers
 
         [HttpPost("Register")]
         public ActionResult<Users> Register(UsersDTO request)
-        {         
-            
+        {
+            _userService.Register(request);
 
             return Ok(user);
         }
@@ -39,11 +39,11 @@ namespace LoginAuthProject.Controllers
             {
                 return BadRequest("User not found.");
             }
-            
-            //if(new PasswordHasher<Users>().VerifyHashedPassword(user, user.PasswordHash, request.Password) == PasswordVerificationResult.Failed)
-            //{
-            //    return BadRequest("Password not matched.");
-            //}
+
+            if (new PasswordHasher<Users>().VerifyHashedPassword(user, user.PasswordHash, request.Password) == PasswordVerificationResult.Failed)
+            {
+                return BadRequest("Password not matched.");
+            }
 
             string token = CreateToken(user);
 

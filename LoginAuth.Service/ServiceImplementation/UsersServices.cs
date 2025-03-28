@@ -12,14 +12,16 @@ namespace LoginAuth.Service.ServiceImplementation
 {
     public class UsersServices : IUsersServices
     {
-        public ActionResult<Users> Register(UsersDTO request)
+        public List<Users> Register(UsersDTO request)
         {
 
             var hashPassword = new PasswordHasher<Users>()
-        }
             .HashPassword(user, request.Password);
 
             user.UserName = request.UserName;
                 user.PasswordHash = hashPassword;
+
+            return Ok(user);
+        }
     }
 }
