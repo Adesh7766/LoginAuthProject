@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\LoginAuth.DAL\LoginAuth.DAL.csproj" />
     <ProjectReference Include="..\LoginAuth.Entities\LoginAuth.Entities.csproj" />
   </ItemGroup>

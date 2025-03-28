@@ -1,4 +1,5 @@
-﻿using LoginAuth.Entities.DTO;
+﻿using LoginAuth.Entities.Common;
+using LoginAuth.Entities.DTO;
 using LoginAuth.Entities.Models;
 using LoginAuth.Service.IService;
 using Microsoft.AspNetCore.Http;
@@ -18,39 +19,25 @@ namespace LoginAuthProject.Controllers
             _userService = userService;
         }
 
-        Users user = new Users()
-        {
-            UserName = "Ram123",
-            PasswordHash = "randommpw"
-        };
-
         [HttpPost("Register")]
         public ActionResult<Users> Register(UsersDTO request)
         {
-            _userService.Register(request);
+            var message = _userService.Register(request);
 
-            return Ok(user);
+            return Ok(message);
         }
 
         [HttpPost("Login")]
         public ActionResult<string> Login(UsersDTO request)
         {
-            if(user.UserName != request.UserName)
-            {
-                return BadRequest("User not found.");
-            }
+            ResponseData data  = _userService.Login(request);
 
-            if (new PasswordHasher<Users>().VerifyHashedPassword(user, user.PasswordHash, request.Password) == PasswordVerificationResult.Failed)
-            {
-                return BadRequest("Password not matched.");
-            }
-
-            string token = CreateToken(user);
+            string token = CreateToken(data.Data);
 
             return Ok(token);
         }
 
-            
+
 
     }
 }

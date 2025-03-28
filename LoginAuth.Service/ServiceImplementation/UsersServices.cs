@@ -1,19 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Azure.Core;
-using LoginAuth.Entities.DTO;
+﻿using LoginAuth.Entities.DTO;
+using Microsoft.AspNetCore.Identity;
 using LoginAuth.Entities.Models;
 using LoginAuth.Service.IService;
+using LoginAuth.DAL.IRepository;
+using LoginAuth.Entities.Common;
 
 namespace LoginAuth.Service.ServiceImplementation
 {
     public class UsersServices : IUsersServices
     {
-        public List<Users> Register(UsersDTO request)
+        private readonly IUsersRepo _repo;
+
+        public UsersServices(IUsersRepo repo)
         {
+            _repo = repo;
+        }
+
+        public string Register(UsersDTO request)
+        {
+            Users user = new Users();
 
             var hashPassword = new PasswordHasher<Users>()
             .HashPassword(user, request.Password);
@@ -21,7 +26,16 @@ namespace LoginAuth.Service.ServiceImplementation
             user.UserName = request.UserName;
                 user.PasswordHash = hashPassword;
 
-            return Ok(user);
+            string message = _repo.Register(user);
+
+            return message;
+        }
+
+        public ResponseData Login(UsersDTO request)
+        {
+            ResponseData message = _repo.Login(request);
+
+            return message;
         }
     }
 }

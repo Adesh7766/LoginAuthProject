@@ -22,6 +22,11 @@ namespace LoginAuthProject.Controllers
 
         protected string CreateToken(Users user)
         {
+            if(user == null)
+            {
+                return "User not found";
+            }
+
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.UserName)
